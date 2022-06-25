@@ -22,7 +22,7 @@ pipeline {
 	// agent { docker { image 'maven:3.8.6' } }
 	// agent { docker { image 'node:18.4'}}
 	stages {
-		stage('Build') {
+		stage('Checkout') {
 			steps {
 				sh "mvn --version"
 				sh "docker version"
@@ -34,14 +34,22 @@ pipeline {
 				echo "BUILD URL -- $env.BUILD_URL"
 			}
 		}
-		stage('Test') {
+
+		stage('Compile') {
 			steps {
-				echo "Test"
+				sh "mvn clean compile"
 			}
 		}
+
+		stage('Test') {
+			steps {
+				sh "mvn test"
+			}
+		}
+
 		stage('Integration Test') {
 			steps {
-				echo "Integration Test"
+				echo "mvn failsafe:integration-test failsafe:verify"
 			}
 		}
 	} 
