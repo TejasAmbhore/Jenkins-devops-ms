@@ -11,14 +11,19 @@
 // }
 
 pipeline {
-	// agent any
+	agent any
 	// agent { docker { image 'maven:3.8.6' } }
-	agent { docker { image 'node:18.4'}}
+	// agent { docker { image 'node:18.4'}}
 	stages {
 		stage('Build') {
 			steps {
-				sh "node --version"
+				// sh "node --version"
 				echo "Build"
+				echo "PATH -- $PATH"
+				echo "BUILD_NUMBER -- $env.BUILD_NUMBER"
+				echo "BUILD ID -- $env.BUILD_ID"
+				echo "BUILD TAG -- $env.BUILD_TAG"
+				echo "BUILD URL -- $env.BUILD_URL"
 			}
 		}
 		stage('Test') {
